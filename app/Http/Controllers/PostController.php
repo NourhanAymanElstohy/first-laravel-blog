@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use App\Post;
 use App\User;
@@ -33,10 +35,8 @@ class PostController extends Controller
             'post' => $post,
         ]);
     }
-    public function store()
+    public function store(StorePostRequest $request)
     {
-        $request = request();
-
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -59,12 +59,13 @@ class PostController extends Controller
         ]);
     }
 
-    public function update()
+    public function update(UpdatePostRequest $request)
     {
-        $postId = request()->post;
+        $postId = $request->post;
+        // dd($request->post);
         $post = Post::find($postId);
 
-        $data = request()->only(['title', 'description', 'user_id']);
+        $data = $request->only(['title', 'description', 'user_id']);
         $post->update($data);
 
         return redirect()->route('posts.index');
