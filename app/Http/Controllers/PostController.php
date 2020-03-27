@@ -51,8 +51,11 @@ class PostController extends Controller
         $postId = request()->post;
 
         $post = Post::find($postId);
+        $users = User::all();
+
         return view('edit', [
             'post' => $post,
+            'users' => $users,
         ]);
     }
 
