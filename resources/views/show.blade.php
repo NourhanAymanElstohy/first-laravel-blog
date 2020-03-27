@@ -15,7 +15,7 @@
 
     <div class="card mt-5">
         <div class="card-header text-center bg-success text-light">
-           User info
+           Post Creator info
         </div>
         <div class="card-body">
             <h5 class="card-title"><b>Name:</b> {{$post->user->name}}</h5>
