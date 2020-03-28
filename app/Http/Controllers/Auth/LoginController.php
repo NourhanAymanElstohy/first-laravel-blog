@@ -7,7 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 
-
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -50,7 +51,19 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-        dd($user);
-        // return redirect('/posts');
+        if ($user) {
+            $user = User::find($user->id);
+        } else {
+            $user = new User;
+            $user->id = $this->id;
+            $user->name = $this->name;
+            $user->email = $this->email;
+            $user->save();
+        }
+
+        // dd($user->id);
+        Auth::loginUsingId($user->id);
+
+        return redirect('/posts');
     }
 }
