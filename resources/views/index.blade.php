@@ -10,6 +10,7 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Title</th>
+        <th scope="col">Post Slug</th>
         <th scope="col">Description</th>
         <th scope="col">Created By</th>
         <th scope="col">created At</th>
@@ -21,13 +22,14 @@
     <tr>
       <th scope="row">{{$post->id}}</th>
       <td>{{$post->title}}</td>
+      <td>{{$post->slug}}</td>
       <td>{{$post->description}}</td>
       <td>{{$post->created_at->format('d-m-Y')}}</td>
       <td>{{$post->user ? $post->user->name :'not exist!'}}</td>
     
         <td>
           <div class="row">
-            <a href="{{route('posts.show',['post' => $post->id])}}" class="btn btn-primary btn-sm mr-2">View</a>
+            <a href="{{route('posts.show',['post' => $post->id])}}" class="btn btn-primary btn-sm mr-2">View Details</a>
             <a href="{{route('posts.edit',['post' => $post->id])}}" class="btn btn-success btn-sm mr-2">Edit</a>
             <form method="POST" action="{{route('posts.destroy',['post' => $post->id])}}">
               @csrf  
