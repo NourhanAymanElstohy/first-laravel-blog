@@ -7,15 +7,18 @@ use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use App\Post;
 use App\User;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostController extends Controller
 {
     public function index()
     {
         $posts = Post::all();
-
+        // dd($posts);
+        // $slug = SlugService::createSlug(Post::class, 'slug', $posts->title);
         return view('index', [
             'posts' => $posts,
+
         ]);
     }
 
@@ -33,16 +36,19 @@ class PostController extends Controller
 
         return view('show', [
             'post' => $post,
+
         ]);
     }
     public function store(StorePostRequest $request)
     {
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+
         Post::create([
             'title' => $request->title,
+            'slug' => $slug,
             'description' => $request->description,
             'user_id' => $request->user_id,
         ]);
-
         return redirect()->route('posts.index');
     }
 
@@ -62,10 +68,12 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request)
     {
         $postId = $request->post;
-        // dd($request->post);
         $post = Post::find($postId);
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
 
         $data = $request->only(['title', 'description', 'user_id']);
+        $data += array('slug' => $slug);
+
         $post->update($data);
 
         return redirect()->route('posts.index');
@@ -82,3 +90,4 @@ class PostController extends Controller
 }
 
 //storage url === to get file name
+// php make:response == responsible interface
