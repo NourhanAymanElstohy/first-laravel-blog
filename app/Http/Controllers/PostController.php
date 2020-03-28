@@ -80,3 +80,5 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 }
+
+//storage url === to get file name
