@@ -8,7 +8,7 @@
             Post info
         </div>
         <div class="card-body">
-            <h5 class="card-title"><b>Title:</b> {{$post->title}}</h5>
+            <h5 class="card-title"><b>Title:</b> {{$post->slug ? $post->slug : $post->title }}</h5>
             <p class="card-text"><b>Description:</b><br> {{$post->description}}</p>
         </div>
     </div>
