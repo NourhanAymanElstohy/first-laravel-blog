@@ -23,9 +23,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/posts', 'Api\PostController@index');
 
-Route::get('/posts/{post}', 'Api\PostController@show')->middleware('auth:sanctum');
+Route::get('/posts/{post}', 'Api\PostController@show');
 
-Route::post('/posts', 'Api\PostController@store')->middleware('auth:sanctum');
+Route::post('/posts', 'Api\PostController@store');
 
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
