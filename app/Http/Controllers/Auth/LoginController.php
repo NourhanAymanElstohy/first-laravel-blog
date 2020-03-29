@@ -45,24 +45,23 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         return Socialite::driver('github')->redirect();
-        // return redirect()->route('posts.index');
     }
+
     public function handleProviderCallback()
     {
         $user = Socialite::driver('github')->user();
 
-        if ($user) {
-            $user = User::find($user->id);
+        $data = [
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'password' => $user->token,
+        ];
+        $my_u = User::where('email', '', $user->getEmail())->first();
+        if ($my_u === null) {
+            Auth::login(User::firstOrCreate($data));
         } else {
-            $user = new User;
-            $user->id = $this->id;
-            $user->name = $this->name;
-            $user->email = $this->email;
-            $user->save();
+            Auth::login($my_u);
         }
-
-        // dd($user->id);
-        Auth::loginUsingId($user->id);
 
         return redirect('/posts');
     }
