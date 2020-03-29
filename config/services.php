@@ -34,5 +34,10 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => 'http://127.0.0.1:8000/login/github/callback',
     ],
+    'google' => [
+        'client_id' => env('GOGLE_PLUS_CLIENT_ID'),
+        'client_secret' => env('GOGLE_PLUS_CLIENT_SECRET'),
+        'redirect' => 'http://127.0.0.1:8000/callback/google',
+    ],
 
 ];
